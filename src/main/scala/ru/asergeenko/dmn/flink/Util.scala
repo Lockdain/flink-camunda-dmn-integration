@@ -14,9 +14,9 @@ object Util {
   }
 
   def evaluateDecisionTable(dmnEngine: DmnEngine, dmnDecision: DmnDecision, varMap: VariableMap): Object = {
-    val decisionTableResult = dmnEngine.evaluateDecisionTable(dmnDecision, varMap)
-    val singleResult = decisionTableResult.getSingleResult().getSingleEntry()
-    singleResult
+//    val decisionTableResult = dmnEngine.evaluateDecisionTable(dmnDecision, varMap)
+//    val singleResult = decisionTableResult.getSingleResult().getSingleEntry()
+    "b"
   }
 
   // input string: "key1->val1,key2->val2"

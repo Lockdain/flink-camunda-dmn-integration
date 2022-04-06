@@ -26,7 +26,7 @@ object StreamingDmnApp extends App {
   properties.setProperty("auto.offset.reset", "latest")
 
   val producer = new FlinkKafkaProducer[String](
-    "my-topic",                  // target topic
+    "result",                  // target topic
     new SimpleStringSchema(),    // serialization schema
     properties                // producer config
   )
@@ -66,9 +66,9 @@ object StreamingDmnApp extends App {
     .connect(dmnVariablesStream)
     .keyBy("ruleId", "ruleId")
     .process(new DmnExecutionFunction)
-    .addSink(producer)
-//    .print("Decision result: ")
     .setParallelism(1)
+    .addSink(producer)
+
 
 
   env.execute("DMN-Decision")
