@@ -19,17 +19,21 @@ class DmnExecutionFunction extends KeyedCoProcessFunction[String, DmnXml, DmnVar
 
     dmnCoreState.update(dmnXml.xmlStr)
 
+    println("Rule state for key is updated: " + ctx.getCurrentKey)
+    println("New state value " + dmnCoreState.value())
+
   }
 
   override def processElement2(dmnVariables: DmnVariables, ctx: KeyedCoProcessFunction[String, DmnXml, DmnVariables, String]#Context, out: Collector[String]): Unit = {
-    println("New DMN variables are arrived.")
+    println("New DMN variables are arrived: " + dmnVariables)
 
     val dmnEngine = DmnEngineConfiguration
       .createDefaultDmnEngineConfiguration()
       .buildEngine()
 
     val variableMap = Util.deserializeStringToDmnVars(dmnVariables.mapStr)
-    val dmnDecision = dmnEngine.parseDecision(ctx.getCurrentKey, Util.strToStream(dmnCoreState.value())) // TODO: Move to state as DmnDecision object
+    val dmnAsStream = Util.strToStream(dmnCoreState.value())
+    val dmnDecision = dmnEngine.parseDecision("age_salary", dmnAsStream) // TODO: Move to state as DmnDecision object
     val outcome = Util.evaluateDecisionTable(dmnEngine, dmnDecision, variableMap)
     out.collect(outcome.toString)
   }

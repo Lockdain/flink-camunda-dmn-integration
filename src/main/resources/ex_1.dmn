@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:camunda="http://camunda.org/schema/1.0/dmn" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Delq" name="delq" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.12.0">
+  <inputData id="InputData_05nbx1q" name="AGE and SALARY" />
+  <decision id="age_salary" name="Age &#38; Salary">
+    <informationRequirement id="InformationRequirement_135ft1n">
+      <requiredInput href="#InputData_05nbx1q" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0fxyasc" hitPolicy="FIRST">
+      <input id="InputClause_0xlkk9g" camunda:inputVariable="age">
+        <inputExpression id="LiteralExpression_18sjzzr" typeRef="integer">
+          <text>age</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1ibh9tr" camunda:inputVariable="salary">
+        <inputExpression id="LiteralExpression_15ygh7d" typeRef="double">
+          <text>salary</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1wjyetp" name="category" typeRef="string" />
+      <rule id="DecisionRule_1d3goyt">
+        <inputEntry id="UnaryTests_12wz3xh">
+          <text>[18..21]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1suunco">
+          <text>[30000..49999]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1oxwx43">
+          <text>"c"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1pv1nzo">
+        <inputEntry id="UnaryTests_186e7z8">
+          <text>&lt; 18</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1qhek3n">
+          <text>&lt; 30000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1wxe8do">
+          <text>"b"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1yj20xz">
+        <inputEntry id="UnaryTests_075trao">
+          <text>[21..35]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1y1ivrb">
+          <text>[50000..70000]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0fs1u3o">
+          <text>"a"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0305853">
+        <inputEntry id="UnaryTests_1u24ck3">
+          <text>[35..50]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_19yvii2">
+          <text>[70001..100000]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0vj4w03">
+          <text>"aa"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0vimx8b">
+        <inputEntry id="UnaryTests_0gz7714">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0fleofg">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1a7p4ma">
+          <text>"no cat"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="total_income" name="Total Income">
+    <informationRequirement id="InformationRequirement_0920ngb">
+      <requiredDecision href="#age_salary" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1sdogec">
+      <requiredInput href="#InputData_13dpld9" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1parsbw">
+      <input id="InputClause_0v3mwxn" label="salaries" camunda:inputVariable="salaries">
+        <inputExpression id="LiteralExpression_108hvn0" typeRef="double">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0ncx46v" name="sumSalary" typeRef="double" />
+      <rule id="DecisionRule_1w7wk35">
+        <inputEntry id="UnaryTests_00ajuxi">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0vxie5p">
+          <text>sum(salaries) </text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_13dpld9" name="Income for the last three months" />
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_0lxwi5u" dmnElementRef="InputData_05nbx1q">
+        <dc:Bounds height="45" width="125" x="157" y="97" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1bs0vq7" dmnElementRef="InformationRequirement_135ft1n">
+        <di:waypoint x="282" y="120" />
+        <di:waypoint x="360" y="120" />
+        <di:waypoint x="380" y="120" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1xhlljh" dmnElementRef="age_salary">
+        <dc:Bounds height="80" width="180" x="380" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0iayysc" dmnElementRef="InformationRequirement_0920ngb">
+        <di:waypoint x="560" y="120" />
+        <di:waypoint x="680" y="120" />
+        <di:waypoint x="700" y="120" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0wp0i3p" dmnElementRef="total_income">
+        <dc:Bounds height="80" width="180" x="700" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1allzrr" dmnElementRef="InputData_13dpld9">
+        <dc:Bounds height="45" width="125" x="727" y="247" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0ul27ka" dmnElementRef="InformationRequirement_1sdogec">
+        <di:waypoint x="790" y="247" />
+        <di:waypoint x="790" y="180" />
+        <di:waypoint x="790" y="160" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

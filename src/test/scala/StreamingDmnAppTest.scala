@@ -1,6 +1,13 @@
 import org.camunda.bpm.engine.variable.Variables
 import org.scalatest.FunSuite
-import ru.asergeenko.dmn.flink.{StreamingDmnApp, Util}
+import ru.asergeenko.dmn.flink.{DmnVariables, DmnXml, StreamingDmnApp, Util}
+import io.circe.generic.auto._
+import io.circe.parser._
+import io.circe.syntax._
+import org.camunda.bpm.dmn.engine.DmnDecision
+
+import scala.io.Source
+
 
 class StreamingDmnAppTest extends FunSuite {
   test("StreamingAppStringToVariableMap") {
@@ -19,5 +26,18 @@ class StreamingDmnAppTest extends FunSuite {
     val map = Util.deserializeStringToDmnVars(string)
     println(map)
     map
+  }
+
+  test("Generate Test DmnXml.json") {
+    val xmlStr = Source.fromFile("src/main/resources/ex_1.dmn").getLines.toList.mkString
+    val dmnXml = DmnXml("avg_salary", xmlStr)
+    val asJson = dmnXml.asJson
+    println(asJson)
+  }
+
+  test("Generate Test DmnVariables.json") {
+    val dmnVariables = DmnVariables("avg_salary", "age->24,salary->28000")
+    val asJson = dmnVariables.asJson
+    println(asJson)
   }
 }

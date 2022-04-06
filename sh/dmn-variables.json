@@ -1,0 +1,4 @@
+{
+  "ruleId" : "avg_salary",
+  "mapStr" : "age->24,salary->28000"
+}
